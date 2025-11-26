@@ -6,8 +6,9 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c=>{
-    c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.OpenApiInfo ()
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc(name: "v1", new Microsoft.OpenApi.OpenApiInfo()
     {
         Title = "Catalog.Api",
         Version = "v1",
