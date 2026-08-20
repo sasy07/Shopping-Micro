@@ -1,14 +1,17 @@
-﻿using Catalog.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories
 {
-    public class ProductRepository(ICatalogContext context) : IProductRepository
+    public class ProductRepository(ICatalogContext context): IProductRepository
     {
         public async Task<IEnumerable<Product>> GetProducts()
-            => await context.Products.Find(x => true).ToListAsync();
+            => await context.Products.Find(x=>true).ToListAsync();
 
         public async Task<Product> GetProductById(string id)
             => await context.Products.Find(x => x.Id == id).FirstOrDefaultAsync();
@@ -27,6 +30,12 @@ namespace Catalog.Infrastructure.Repositories
 
         public async Task<IEnumerable<Product>> GetProductsByBrand(string brand)
             => await context.Products.Find(x => x.Brands.Name == brand).ToListAsync();
+
+        public async Task<Product> CreateProduct(Product product)
+        {
+            await context.Products.InsertOneAsync(product);
+            return product;
+        }
 
         public async Task<bool> UpdateProduct(Product product)
         {
